@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم DevMasters Team</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="لوحة تحكم DevMasters Team لإدارة الفريق والمشاريع">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <i class="fas fa-cogs"></i>
+                <span>لوحة التحكم</span>
+            </div>
+            <div class="loader-spinner"></div>
+            <p>جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h2>لوحة تحكم DevMasters</h2>
+                </div>
+                <p>قم بتسجيل الدخول للوصول إلى لوحة التحكم</p>
+            </div>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <span>تسجيل الدخول</span>
+                    <i class="fas fa-sign-in-alt"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-container" id="adminContainer" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-code"></i>
+                    <span>DevMasters</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="nav-link" data-section="dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>لوحة المعلومات</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#team" class="nav-link" data-section="team">
+                            <i class="fas fa-users"></i>
+                            <span>إدارة الفريق</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#projects" class="nav-link" data-section="projects">
+                            <i class="fas fa-project-diagram"></i>
+                            <span>إدارة المشاريع</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#services" class="nav-link" data-section="services">
+                            <i class="fas fa-cogs"></i>
+                            <span>إدارة الخدمات</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#settings" class="nav-link" data-section="settings">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn btn-outline logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <h1 class="page-title" id="pageTitle">لوحة المعلومات</h1>
+                    <p class="page-subtitle" id="pageSubtitle">مرحباً بك في لوحة تحكم DevMasters Team</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <span class="user-name">المدير</span>
+                            <span class="user-role">مدير النظام</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section class="content-section active" id="dashboard-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="teamCount">0</h3>
+                            <p class="stat-label">أعضاء الفريق</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="projectCount">0</h3>
+                            <p class="stat-label">المشاريع</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="serviceCount">0</h3>
+                            <p class="stat-label">الخدمات</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 class="stat-number" id="visitCount">0</h3>
+                            <p class="stat-label">زيارات الموقع</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>آخر المشاريع المضافة</h3>
+                            <a href="#projects" class="view-all">عرض الكل</a>
+                        </div>
+                        <div class="card-content">
+                            <div class="recent-items" id="recentProjects">
+                                <!-- سيتم ملؤها بـ JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>أعضاء الفريق الجدد</h3>
+                            <a href="#team" class="view-all">عرض الكل</a>
+                        </div>
+                        <div class="card-content">
+                            <div class="recent-items" id="recentTeam">
+                                <!-- سيتم ملؤها بـ JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Management Section -->
+            <section class="content-section" id="team-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>إدارة الفريق</h2>
+                        <p>إضافة وتعديل أعضاء الفريق</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openTeamModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>إضافة عضو جديد</span>
+                    </button>
+                </div>
+                <div class="team-grid" id="teamGrid">
+                    <!-- سيتم ملؤها بـ JavaScript -->
+                </div>
+            </section>
+
+            <!-- Projects Management Section -->
+            <section class="content-section" id="projects-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>إدارة المشاريع</h2>
+                        <p>إضافة وتعديل المشاريع</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openProjectModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>إضافة مشروع جديد</span>
+                    </button>
+                </div>
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- سيتم ملؤها بـ JavaScript -->
+                </div>
+            </section>
+
+            <!-- Services Management Section -->
+            <section class="content-section" id="services-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>إدارة الخدمات</h2>
+                        <p>إضافة وتعديل الخدمات</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openServiceModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>إضافة خدمة جديدة</span>
+                    </button>
+                </div>
+                <div class="services-grid" id="servicesGrid">
+                    <!-- سيتم ملؤها بـ JavaScript -->
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="content-section" id="settings-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>الإعدادات</h2>
+                        <p>إعدادات الموقع والنظام</p>
+                    </div>
+                </div>
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <h3>إعدادات الموقع</h3>
+                            <p>تحديث معلومات الموقع الأساسية</p>
+                        </div>
+                        <form class="settings-form" id="siteSettingsForm">
+                            <div class="form-group">
+                                <label for="siteName">اسم الموقع</label>
+                                <input type="text" id="siteName" name="siteName" value="DevMasters Team">
+                            </div>
+                            <div class="form-group">
+                                <label for="siteDescription">وصف الموقع</label>
+                                <textarea id="siteDescription" name="siteDescription" rows="3">فريق تقني متخصص في تطوير البرمجيات</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="heroTitle">عنوان القسم الرئيسي</label>
+                                <input type="text" id="heroTitle" name="heroTitle" value="مرحباً بك في DevMasters Team">
+                            </div>
+                            <div class="form-group">
+                                <label for="heroSubtitle">العنوان الفرعي للقسم الرئيسي</label>
+                                <textarea id="heroSubtitle" name="heroSubtitle" rows="2">فريق تقني متخصص في تطوير البرمجيات، نعمل بشغف لابتكار حلول تقنية تواكب المستقبل</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">البريد الإلكتروني</label>
+                                <input type="email" id="contactEmail" name="contactEmail" value="devmasters.team@gmail.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPhone">رقم الهاتف</label>
+                                <input type="tel" id="contactPhone" name="contactPhone" value="+967-778447779">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i>
+                                <span>حفظ التغييرات</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <h3>إعدادات الألوان والتصميم</h3>
+                            <p>تخصيص ألوان وشكل الموقع</p>
+                        </div>
+                        <form class="settings-form" id="designSettingsForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="primaryColor">اللون الأساسي</label>
+                                    <input type="color" id="primaryColor" name="primaryColor" value="#1e3a8a">
+                                </div>
+                                <div class="form-group">
+                                    <label for="secondaryColor">اللون الثانوي</label>
+                                    <input type="color" id="secondaryColor" name="secondaryColor" value="#3b82f6">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="accentColor">لون التمييز</label>
+                                    <input type="color" id="accentColor" name="accentColor" value="#fbbf24">
+                                </div>
+                                <div class="form-group">
+                                    <label for="backgroundColor">لون الخلفية</label>
+                                    <input type="color" id="backgroundColor" name="backgroundColor" value="#f8fafc">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fontFamily">نوع الخط</label>
+                                <select id="fontFamily" name="fontFamily">
+                                    <option value="Poppins">Poppins (افتراضي)</option>
+                                    <option value="Cairo">Cairo</option>
+                                    <option value="Tajawal">Tajawal</option>
+                                    <option value="Almarai">Almarai</option>
+                                    <option value="IBM Plex Sans Arabic">IBM Plex Sans Arabic</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-palette"></i>
+                                <span>تطبيق التصميم</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <h3>إعدادات العناوين</h3>
+                            <p>تخصيص عناوين الأقسام</p>
+                        </div>
+                        <form class="settings-form" id="titlesSettingsForm">
+                            <div class="form-group">
+                                <label for="aboutTitle">عنوان قسم "من نحن"</label>
+                                <input type="text" id="aboutTitle" name="aboutTitle" value="من نحن">
+                            </div>
+                            <div class="form-group">
+                                <label for="servicesTitle">عنوان قسم "الخدمات"</label>
+                                <input type="text" id="servicesTitle" name="servicesTitle" value="خدماتنا">
+                            </div>
+                            <div class="form-group">
+                                <label for="teamTitle">عنوان قسم "الفريق"</label>
+                                <input type="text" id="teamTitle" name="teamTitle" value="فريق العمل">
+                            </div>
+                            <div class="form-group">
+                                <label for="projectsTitle">عنوان قسم "المشاريع"</label>
+                                <input type="text" id="projectsTitle" name="projectsTitle" value="مشاريعنا">
+                            </div>
+                            <div class="form-group">
+                                <label for="whyUsTitle">عنوان قسم "لماذا نحن"</label>
+                                <input type="text" id="whyUsTitle" name="whyUsTitle" value="لماذا تختارنا؟">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactTitle">عنوان قسم "اتصل بنا"</label>
+                                <input type="text" id="contactTitle" name="contactTitle" value="اتصل بنا">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-heading"></i>
+                                <span>حفظ العناوين</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Team Modal -->
+    <div class="modal" id="teamModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="teamModalTitle">إضافة عضو جديد</h3>
+                <button class="close-btn" onclick="closeTeamModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="modal-form" id="teamForm">
+                <input type="hidden" id="teamMemberId" name="id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="memberName">الاسم</label>
+                        <input type="text" id="memberName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberRole">المنصب</label>
+                        <input type="text" id="memberRole" name="role" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="memberDescription">الوصف</label>
+                    <textarea id="memberDescription" name="description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="memberImageFile">صورة العضو</label>
+                    <input type="file" id="memberImageFile" name="imageFile" accept="image/*">
+                    <input type="hidden" id="memberPrevImage" name="prevImage">
+                </div>
+                <div class="form-group">
+                    <label for="memberSkills">المهارات (مفصولة بفاصلة)</label>
+                    <input type="text" id="memberSkills" name="skills" placeholder="React, Node.js, Python">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="memberLinkedin">LinkedIn</label>
+                        <input type="url" id="memberLinkedin" name="linkedin">
+                    </div>
+                    <div class="form-group">
+                        <label for="memberGithub">GitHub</label>
+                        <input type="url" id="memberGithub" name="github">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeTeamModal()">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span>حفظ</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="projectModalTitle">إضافة مشروع جديد</h3>
+                <button class="close-btn" onclick="closeProjectModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="modal-form" id="projectForm">
+                <input type="hidden" id="projectId" name="id">
+                <div class="form-group">
+                    <label for="projectName">اسم المشروع</label>
+                    <input type="text" id="projectName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">وصف المشروع</label>
+                    <textarea id="projectDescription" name="description" rows="3" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectCategory">الفئة</label>
+                        <select id="projectCategory" name="category" required>
+                            <option value="">اختر الفئة</option>
+                            <option value="web">مواقع إلكترونية</option>
+                            <option value="mobile">تطبيقات موبايل</option>
+                            <option value="ai">ذكاء اصطناعي</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="projectStatus">الحالة</label>
+                        <select id="projectStatus" name="status" required>
+                            <option value="completed">مكتمل</option>
+                            <option value="in-progress">قيد التطوير</option>
+                            <option value="planning">في التخطيط</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projectImageFile">صورة المشروع</label>
+                    <input type="file" id="projectImageFile" name="imageFile" accept="image/*">
+                    <input type="hidden" id="projectPrevImage" name="prevImage">
+                </div>
+                <div class="form-group">
+                    <label for="projectTech">التقنيات المستخدمة (مفصولة بفاصلة)</label>
+                    <input type="text" id="projectTech" name="technologies" placeholder="React, Node.js, MongoDB">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectDemo">رابط المعاينة</label>
+                        <input type="url" id="projectDemo" name="demoUrl">
+                    </div>
+                    <div class="form-group">
+                        <label for="projectGithub">رابط GitHub</label>
+                        <input type="url" id="projectGithub" name="githubUrl">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeProjectModal()">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span>حفظ</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Service Modal -->
+    <div class="modal" id="serviceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="serviceModalTitle">إضافة خدمة جديدة</h3>
+                <button class="close-btn" onclick="closeServiceModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="modal-form" id="serviceForm">
+                <input type="hidden" id="serviceId" name="id">
+                <div class="form-group">
+                    <label for="serviceName">اسم الخدمة</label>
+                    <input type="text" id="serviceName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceDescription">وصف الخدمة</label>
+                    <textarea id="serviceDescription" name="description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="serviceIcon">أيقونة الخدمة (Font Awesome class)</label>
+                    <input type="text" id="serviceIcon" name="icon" placeholder="fas fa-globe" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceFeatures">المميزات (مفصولة بفاصلة)</label>
+                    <input type="text" id="serviceFeatures" name="features" placeholder="React, Vue.js, Angular">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeServiceModal()">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span>حفظ</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Firebase & Admin Scripts -->
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="admin-script.js"></script>
+    
+</body>
+</html>
