@@ -309,6 +309,30 @@ body {
 .sidebar-nav ul {
     list-style: none;
 }
+/* إخفاء الشريط الجانبي في الشاشات الصغيرة */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(100%);
+        position: fixed;
+        right: 0;
+        top: 0;
+        height: 100%;
+        background: white;
+        z-index: 2000;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-right: 0;
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+}
 
 .nav-item {
     margin-bottom: 5px;
